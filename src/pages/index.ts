@@ -1,2 +1,2 @@
-export { Home } from './home/Home';
-export { Notfound } from './Notfound';
+export { Home } from './home/view/Home';
+export { Notfound } from './notFound/view/Notfound';

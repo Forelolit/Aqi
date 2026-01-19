@@ -1,5 +1,5 @@
 import { Container, LeafletMap, Spinner } from '@/components';
-import { useGetDataByCity } from './useGetDataByCity';
+import { useGetDataByCity } from '../hooks/useGetDataByCity';
 import { useEffect, useState } from 'react';
 import type { MarkerData } from '@/components/leafletMap/types/types';
 import { Search } from '@/components/search';
@@ -60,8 +60,7 @@ export const Home = () => {
                     <div className="px-10 py-4 bg-neutral-600/30 backdrop-blur-sm rounded-[17px]">
                         <div className="flex flex-col justify-center gap-2 mb-5 text-2xl font-black">
                             <span>
-                                IQ <i>AIR</i>:{' '}
-                                {String(data?.data[0].aqi) === '-' ? 'Данные отсутствуют' : data?.data[0].aqi}
+                                AQI: {String(data?.data[0].aqi) === '-' ? 'Данные отсутствуют' : data?.data[0].aqi}
                             </span>
                             <span>Станция: {data?.data[0].station.name}</span>
                         </div>
