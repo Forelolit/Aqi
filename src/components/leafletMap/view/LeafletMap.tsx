@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import type { LeafletMapProps } from '../types/types';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
-export const LeafletMap: FC<LeafletMapProps> = ({className, currentPosition, markers }) => {
+export const LeafletMap: FC<LeafletMapProps> = ({ className, currentPosition, markers }) => {
     return (
         <MapContainer center={currentPosition} zoom={13} className={className}>
             <TileLayer
@@ -12,7 +12,7 @@ export const LeafletMap: FC<LeafletMapProps> = ({className, currentPosition, mar
             />
 
             {markers?.map((m) => (
-                <Marker position={m.position}>
+                <Marker key={m.uid} position={m.position}>
                     <Popup>{m.popup}</Popup>
                 </Marker>
             )) ?? []}

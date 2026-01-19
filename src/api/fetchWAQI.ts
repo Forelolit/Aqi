@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const WAQIResponse = import.meta.env.VITE_WAQI_API;
 
-export const fetchWAQI = async <WAQIResponse>() => {
-    const res = await axios.get<WAQIResponse>(WAQIResponse);
+export const fetchWAQI = async <T = WAQIResponse>(city: string): Promise<T> => {
+    const res = await axios.get<T>(`${WAQIResponse}&keyword=${city}`);
     return res.data;
 };
