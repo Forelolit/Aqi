@@ -1,7 +1,8 @@
-import { Button, Container, Input, LeafletMap, Spinner } from '@/components';
+import { Container, LeafletMap, Spinner } from '@/components';
 import { useGetDataByCity } from './useGetDataByCity';
 import { useEffect, useState } from 'react';
 import type { MarkerData } from '@/components/leafletMap/types/types';
+import { Search } from '@/components/search';
 
 export const Home = () => {
     const [cityName, setCityName] = useState('');
@@ -46,18 +47,15 @@ export const Home = () => {
 
             <Container>
                 <div className="flex flex-col justify-center items-center gap-6 min-h-screen">
-                    <div className="bg-neutral-800/80 flex gap-2 p-2 rounded-[15px] w-fit">
-                        <Input
-                            onChange={(e) => {
-                                setCityName(e.target.value);
-                            }}
-                            value={cityName}
-                            placeholder="Введите город"
-                        />
-                        <Button disabled={cityName.trim() === ''} onClick={handleCityNameSet}>
-                            Искать
-                        </Button>
-                    </div>
+                    <Search
+                        onChange={(e) => {
+                            setCityName(e.target.value);
+                        }}
+                        value={cityName}
+                        placeholder="Введите город"
+                        disabled={cityName.trim() === ''}
+                        onClick={handleCityNameSet}
+                    />
 
                     <div className="px-10 py-4 bg-neutral-600/30 backdrop-blur-sm rounded-[17px]">
                         <div className="flex flex-col justify-center gap-2 mb-5 text-2xl font-black">
