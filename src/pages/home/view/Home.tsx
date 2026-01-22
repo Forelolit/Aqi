@@ -6,8 +6,8 @@ import { Search } from '@/components/search';
 
 export const Home = () => {
     const [cityName, setCityName] = useState('');
-    const [city, setCity] = useState('bishkek');
-    const { data, isError, error, isLoading } = useGetDataByCity(city);
+    const [city, setCity] = useState('');
+    const { data, isLoading, isError, error } = useGetDataByCity(city);
 
     useEffect(() => {
         if (data) {
@@ -23,15 +23,13 @@ export const Home = () => {
         ? [data.data[0].station.geo[0], data.data[0].station.geo[1]]
         : null;
 
-    if (!stationPosition)
+    if (isLoading)
         return (
             <div className="flex flex-col gap-5 justify-center items-center min-h-screen">
                 Загрузка координат...
                 <Spinner className="scale-200" />
             </div>
         );
-    if (isError) return <div className="text-red-400">Ошибка {error.message}</div>;
-    if (isLoading) return <Spinner />;
 
     const stationMarkers =
         data?.data?.map<MarkerData>((marker) => ({
@@ -57,20 +55,28 @@ export const Home = () => {
                         onClick={handleCityNameSet}
                     />
 
-                    <div className="px-10 py-4 bg-neutral-600/30 backdrop-blur-sm rounded-[17px]">
-                        <div className="flex flex-col justify-center gap-2 mb-5 text-2xl font-black">
-                            <span>
-                                AQI: {String(data?.data[0].aqi) === '-' ? 'Данные отсутствуют' : data?.data[0].aqi}
-                            </span>
-                            <span>Станция: {data?.data[0].station.name}</span>
-                        </div>
+                    {isError && city && <span className="text-red-400 text-2xl">Ошибка {error.message}</span>}
+                    {!city && <span className="text-2xl">Введите данные</span>}
 
-                        <LeafletMap
-                            currentPosition={stationPosition}
-                            markers={stationMarkers}
-                            className="h-120 w-250 rounded-[15px]"
-                        />
-                    </div>
+                    {!isLoading && stationPosition && (
+                        <>
+                            <div className="px-10 py-4 border border-neutral-600/60 shadow-[inset_0_1px_2px_rgb(113,113,113)] bg-neutral-600/30 backdrop-blur-sm rounded-[17px]">
+                                <div className="flex flex-col justify-center gap-2 mb-5 text-2xl font-black">
+                                    <span>
+                                        AQI:{' '}
+                                        {String(data?.data[0].aqi) === '-' ? 'Данные отсутствуют' : data?.data[0].aqi}
+                                    </span>
+                                    <span>Станция: {data?.data[0].station.name}</span>
+                                </div>
+
+                                <LeafletMap
+                                    currentPosition={stationPosition}
+                                    markers={stationMarkers}
+                                    className="h-120 w-250 rounded-[15px]"
+                                />
+                            </div>
+                        </>
+                    )}
                 </div>
             </Container>
         </section>

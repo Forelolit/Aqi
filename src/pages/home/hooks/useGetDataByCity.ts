@@ -5,5 +5,6 @@ export const useGetDataByCity = (city: string) => {
     return useQuery({
         queryKey: ['city data', city],
         queryFn: () => fetchWAQI(city),
+        retry: false,
     });
 };
