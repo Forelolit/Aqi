@@ -4,3 +4,4 @@ export { Search } from './search/index';
 export { Button } from './ui/button';
 export { Spinner } from './ui/spinner';
 export { Input } from './ui/input';
+export { Toaster } from './ui/sonner';
