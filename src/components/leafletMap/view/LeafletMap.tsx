@@ -1,7 +1,25 @@
 import 'leaflet/dist/leaflet.css';
-import type { FC } from 'react';
+import { Fragment, type FC } from 'react';
 import type { LeafletMapProps } from '../types/types';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+
+const aqiColor = (aqi: number) => {
+    if (aqi <= 50) {
+        return '#008000 ';
+    } else if (aqi <= 100 && aqi > 50) {
+        return '#FFFF00';
+    } else if (aqi <= 150 && aqi > 100) {
+        return '#FFA500';
+    } else if (aqi <= 200 && aqi > 150) {
+        return '#ff0000';
+    } else if (aqi <= 300 && aqi > 200) {
+        return '#800080';
+    } else if (aqi > 300) {
+        return '#800000';
+    } else {
+        return '#808080';
+    }
+};
 
 export const LeafletMap: FC<LeafletMapProps> = ({ className, currentPosition, markers }) => {
     return (
@@ -12,9 +30,12 @@ export const LeafletMap: FC<LeafletMapProps> = ({ className, currentPosition, ma
             />
 
             {markers?.map((m) => (
-                <Marker key={m.uid} position={m.position}>
-                    <Popup>{m.popup}</Popup>
-                </Marker>
+                <Fragment key={m.uid}>
+                    <Marker position={m.position}>
+                        <Popup>{m.popup}</Popup>
+                    </Marker>
+                    <Circle stroke={false} color={aqiColor(m.aqi)} radius={2000} center={m.position} />
+                </Fragment>
             )) ?? []}
         </MapContainer>
     );
