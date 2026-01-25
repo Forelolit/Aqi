@@ -1,10 +1,9 @@
-import type { WAQIResponse } from '@/types/WAQIResponse';
 import axios from 'axios';
-
-const BASE_URL = import.meta.env.VITE_WAQI_API;
+import type { WAQIResponse } from '@/types/WAQIResponse';
+import { BASE_URL, TOKEN } from '@/utils/constants';
 
 export const fetchWAQI = async (city: string): Promise<WAQIResponse> => {
-    const res = await axios.get<WAQIResponse>(`${BASE_URL}&keyword=${city}`);
+    const res = await axios.get<WAQIResponse>(`${BASE_URL}/search/?token=${TOKEN}&keyword=${city}`);
 
     if (res.data.status === 'error') {
         throw new Error(typeof res.data.data === 'string' ? res.data.data : 'API Error');
