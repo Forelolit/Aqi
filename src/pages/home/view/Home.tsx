@@ -88,9 +88,12 @@ export const Home = () => {
     };
 
     return (
-        <section className="relative overflow-hidden">
-            <div className="border-2 border-blue-500 h-300 w-300 rounded-full -z-10 absolute -top-120 -left-100" />
-            <div className="border-2 border-blue-500 h-300 w-300 rounded-full -z-10 absolute -bottom-120 -right-100" />
+        <section className="relative">
+            <div className="absolute inset-0 -z-10 overflow-hidden">
+                <div className="absolute -top-[10%] -left-[10%] h-125 w-125 rounded-full bg-blue-500/20 blur-[120px]" />
+                <div className="absolute top-[20%] -right-[10%] h-100 w-100 rounded-full bg-green-500/20 blur-[100px]" />
+                <div className="absolute -bottom-[10%] left-[20%] h-150 w-150 rounded-full bg-red-500/10 blur-[150px]" />
+            </div>
 
             <Container>
                 <div className="flex flex-col justify-center items-center gap-6 min-h-screen">
@@ -105,13 +108,17 @@ export const Home = () => {
                             onClick={handleCityNameSet}
                         />
 
-                        <Button variant="outline" title="Геопозиция" onClick={handleGeoPosition}>
-                            <MapPinHouseIcon />
+                        <Button
+                            variant="outline"
+                            title="Геопозиция"
+                            onClick={handleGeoPosition}
+                            className="hover:*:stroke-blue-500">
+                            <MapPinHouseIcon color="#ccc" className="duration-300 w-fit h-fit" />
                         </Button>
                     </div>
 
                     {isError && city && <span className="text-red-400 text-2xl">Ошибка {error.message}</span>}
-                    {!city && <span className="text-2xl">Введите данные</span>}
+                    {!city && <span className="text-2xl text-neutral-300">Введите данные</span>}
 
                     {!isLoading && stationPosition && (
                         <div className="px-10 py-4 border border-neutral-600/60 shadow-[inset_0_1px_2px_rgb(113,113,113)] bg-neutral-600/30 backdrop-blur-sm rounded-[17px]">
